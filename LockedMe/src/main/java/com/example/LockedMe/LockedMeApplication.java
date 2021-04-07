@@ -1,5 +1,6 @@
 package com.example.LockedMe;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import org.springframework.boot.SpringApplication;
@@ -10,21 +11,21 @@ import org.springframework.expression.spel.ast.OperatorBetween;
 public class LockedMeApplication {
 	private static FileHandler fh = new FileHandler();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		printWelcomeScreen();
 	}
 	
-	public static void printWelcomeScreen () {
+	public static void printWelcomeScreen () throws IOException {
 		Scanner s = new Scanner(System.in);
 
 		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		System.out.println("Welcome to LockedMe.com Prototype");
 		System.out.println("Developer Name: Laura Flach");
-		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");		
+		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''\n");		
 		System.out.println("Please type the numer of desired option to continue:");	
-		System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
+		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		System.out.println("0 - Exit");
-		System.out.println("1 - Return All Current File Names");
+		System.out.println("1 - Return All Client Files Name List");
 		System.out.println("2 - File Options Menu");
 		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		
@@ -38,7 +39,7 @@ public class LockedMeApplication {
 						Runtime.getRuntime().exit(0);
 						break;
 					case 1 :
-						System.out.println("Chegou no 1");
+						fh.printOrderedFiles();
 						break;
 					case 2 :
 						printFileMenu();
@@ -46,11 +47,11 @@ public class LockedMeApplication {
 					default :
 						System.out.println("\n\nOption Invalid!!!!!\n");
 						System.out.println("Please type the numer of desired option to continue:");	
-						System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
-						System.out.println("0 - Exit");
-						System.out.println("1 - Return All Current File Names");
-						System.out.println("2 - File Options Menu");
 						System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
+						System.out.println("0 - Exit");
+						System.out.println("1 - Return All Client Files Name List");
+						System.out.println("2 - File Options Menu");
+						System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''\n");
 						break;
 					}
 				}
@@ -60,7 +61,7 @@ public class LockedMeApplication {
 				System.out.println("Please type the numer of desired option to continue:");	
 				System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 				System.out.println("0 - Exit");
-				System.out.println("1 - Return All Current File Names");
+				System.out.println("1 - Return All Client Files Name List");
 				System.out.println("2 - File Options Menu");
 				System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 				s.next();
@@ -68,18 +69,19 @@ public class LockedMeApplication {
 		}
 	}
 	
-	public static void printFileMenu() {
+	public static void printFileMenu() throws IOException {
 		Scanner s = new Scanner(System.in);
 
-		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
-		System.out.println("File Options Menu");
-		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");		
-		System.out.println("Please type the numer of desired option to continue:");	
 		System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
+		System.out.println("File Options Menu");
+		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''\n");		
+		System.out.println("Please type the numer of desired option to continue:");	
+		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		System.out.println("0 - Return to Main Menu");
 		System.out.println("1 - Add File");
 		System.out.println("2 - Search File");
 		System.out.println("3 - Delete File");
+		System.out.println("4 - Update Your Current Locker");
 		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		
 		while(s.hasNext()) {
@@ -91,14 +93,17 @@ public class LockedMeApplication {
 					case 0 :
 						printWelcomeScreen();
 						break;
-					case 1 :
-						System.out.println("Chegou no Add File");
+					case 1 :						
+						fh.createFile();
 						break;
 					case 2 :
-						System.out.println("Chegou no Search File");
+						fh.searchFile();
 						break;
 					case 3 :
 						fh.delete();
+						break;
+					case 4 :
+						
 						break;
 					default :
 						System.out.println("\n\nOption Invalid!!!!!\n");
@@ -108,6 +113,7 @@ public class LockedMeApplication {
 						System.out.println("1 - Add File");
 						System.out.println("2 - Search File");
 						System.out.println("3 - Delete File");
+						System.out.println("4 - Update Your Current Locker");
 						System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 						break;
 					}
@@ -121,20 +127,10 @@ public class LockedMeApplication {
 				System.out.println("1 - Add File");
 				System.out.println("2 - Search File");
 				System.out.println("3 - Delete File");
+				System.out.println("4 - Update Your Current Locker");
 				System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 				s.next();
 			}
 		}
 	}
-	
-	public static <E> void printFile (E[] fleet) {
-		System.out.println("########################################################################\n");
-		System.out.println("This is the Airplane Current Fleet\n");
-		for(E element : fleet) {
-			System.out.println(element);
-		}
-		System.out.println("End of Fleet");
-		System.out.println("\n########################################################################");
-	}
-
 }
