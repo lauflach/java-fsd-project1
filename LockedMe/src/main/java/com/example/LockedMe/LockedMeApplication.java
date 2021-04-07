@@ -78,9 +78,9 @@ public class LockedMeApplication {
 		System.out.println("Please type the numer of desired option to continue:");	
 		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		System.out.println("0 - Return to Main Menu");
-		System.out.println("1 - Add File");
-		System.out.println("2 - Search File");
-		System.out.println("3 - Delete File");
+		System.out.println("1 - Add Client File");
+		System.out.println("2 - Search Client File");
+		System.out.println("3 - Delete Client File");
 		System.out.println("4 - Update Your Current Locker");
 		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		
@@ -103,16 +103,16 @@ public class LockedMeApplication {
 						fh.delete();
 						break;
 					case 4 :
-						
+						fh.updateFileLocker();
 						break;
 					default :
 						System.out.println("\n\nOption Invalid!!!!!\n");
 						System.out.println("Please type the numer of desired option to continue:");	
 						System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 						System.out.println("0 - Return to Main Menu");
-						System.out.println("1 - Add File");
-						System.out.println("2 - Search File");
-						System.out.println("3 - Delete File");
+						System.out.println("1 - Add Client File");
+						System.out.println("2 - Search Client File");
+						System.out.println("3 - Delete Client File");
 						System.out.println("4 - Update Your Current Locker");
 						System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 						break;
@@ -124,9 +124,9 @@ public class LockedMeApplication {
 				System.out.println("Please type the numer of desired option to continue:");	
 				System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 				System.out.println("0 - Return to Main Menu");
-				System.out.println("1 - Add File");
-				System.out.println("2 - Search File");
-				System.out.println("3 - Delete File");
+				System.out.println("1 - Add Client File");
+				System.out.println("2 - Search Client File");
+				System.out.println("3 - Delete Client File");
 				System.out.println("4 - Update Your Current Locker");
 				System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 				s.next();

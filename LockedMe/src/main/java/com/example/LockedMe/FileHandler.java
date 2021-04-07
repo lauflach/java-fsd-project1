@@ -19,36 +19,35 @@ import java.util.Scanner;
 
 public class FileHandler {
 	
-	private static ArrayList<String> information = new ArrayList<String>();
 	private static final String folderPath = "Clients\\";
 
 	public static void createFile() throws IOException {
 		
-		ArrayList<String> information = new ArrayList<String>();
 		Scanner s = new Scanner(System.in);
 		String newLocker = "";
 		String oldLocker = "";
+		String fileName;
+		String name;
+		File file;
 			
 		System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		System.out.println("Provide information for the file:");
 		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''\n");
 		
 		System.out.println("Please type your full name:");
-		information.add(s.nextLine());
+		name = s.nextLine();
+		fileName = folderPath + name + ".txt";		
+		file = new File(fileName);
 		
 		System.out.println("Please type your locker number:");
 		newLocker = s.nextLine();
-		information.add(newLocker);
-	
-		String fileName = information.get(0)+".txt";		
-		File file = new File(folderPath+fileName);
-		
+
 		if(file.createNewFile()) {
-			FileWriter writer = new FileWriter(folderPath+fileName);
+			FileWriter writer = new FileWriter(fileName);
 
 			writer.write("This is your LockedMe file:\n\n");
-			writer.write("Name: " + information.get(0) + "\n");
-			writer.write("Locker Number: " + information.get(1) + "\n");
+			writer.write("Name: " + name + "\n");
+			writer.write("Locker Number: " + newLocker + "\n");
 			writer.close();
 			
 			System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
@@ -70,7 +69,7 @@ public class FileHandler {
 						
 						switch (choice) {
 						case 1 :
-							oldLocker = getLocker(fileName);
+							oldLocker = getFileLocker(fileName);
 							updateFile(fileName, oldLocker, newLocker);
 							LockedMeApplication.printFileMenu();
 							break;
@@ -159,6 +158,7 @@ public class FileHandler {
 			fileName = fileName+ext;
 		}
 		
+		fileName = folderPath+fileName;		
 		file = new File(fileName);
 		
 		if(file.exists()) {
@@ -192,7 +192,7 @@ public class FileHandler {
 		}
 						
 		try {
-			Files.delete(Paths.get(file));
+			Files.delete(Paths.get(folderPath+file));
 			System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 			System.out.println("Deletion completed successfully!!");
 			System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''\n");
@@ -219,6 +219,7 @@ public class FileHandler {
 		String oldContent = "";
 		BufferedReader reader = null;
 		FileWriter writer2 = null;
+		String line;
 		
 		System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		System.out.println("Updating your File:");
@@ -229,19 +230,19 @@ public class FileHandler {
 		
 		try {
 			reader = new BufferedReader(new FileReader(fileToBeModified));
-			String line = reader.readLine();
-			//System.out.println("Line = " + line);
+			line = reader.readLine();
+			
 			while (line != null) {
 				oldContent = oldContent + line + System.lineSeparator();
-				//System.out.println("Old Content = " + oldContent);
 				line = reader.readLine();
-				//System.out.println("Line = " + line);
 			}
 			
 			String newContent = oldContent.replaceAll(toReplace, replacement);
 			System.out.println("New Content = \n\n" + newContent);
+			
 			writer2 = new FileWriter(fileToBeModified);
 			writer2.write(newContent);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -258,15 +259,16 @@ public class FileHandler {
 		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 	}
 	
-	public static String getLocker(String fileName) {
+	public static String getFileLocker(String fileName) {
 		String locker = "";		
 		File file = new File(fileName);
 		BufferedReader reader = null;
 		int index;
+		String line;
 		
 		try {
 			reader = new BufferedReader(new FileReader(file));
-			String line = reader.readLine();
+			line = reader.readLine();
 			
 			while (!line.toLowerCase().contains("locker")) {
 				line = reader.readLine();
@@ -291,73 +293,54 @@ public class FileHandler {
 	public static void updateFileLocker() throws IOException {
 		
 		Scanner s = new Scanner(System.in);
+		String ext = ".txt";
 		String newLocker = "";
 		String oldLocker = "";
 		String fileName = "";
+		File file;
 		
 		System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
-		System.out.println("Provide information for the file:");
+		System.out.println("Update Locker");
 		System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''\n");
 		
 		System.out.println("Please type your full name:");
 		fileName = s.nextLine();
-		information.add(fileName);
-		
-		System.out.println("Please type your locker number:");
-		newLocker = s.nextLine();
-		information.add(newLocker);
-		
-		File file = new File(fileName);
-		
-		while(s.hasNext()) {
-			if(s.hasNextInt()) {
-				while(s.hasNextInt()) {
-					int choice = s.nextInt();
-					
-					switch (choice) {
-					case 1 :
-						oldLocker = getLocker(fileName);
-						updateFile(fileName, oldLocker, newLocker);
-						LockedMeApplication.printFileMenu();
-						break;
-					case 2 :
-						LockedMeApplication.printFileMenu();
-						break;
-					default :
-						System.out.println("\n\nOption Invalid!!!!!\n");
-						System.out.println("Please type the numer of desired option to continue...");	
-						System.out.println("Do you wish to update the current locker?");
-						System.out.println("01 - Yes");
-						System.out.println("02 - No");
-						System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
-						break;
-					}
-				}
-			}
-			else {
-				System.out.println("\n\nOption Invalid!!!!!\n");
-				System.out.println("Please type the numer of desired option to continue...");	
-				System.out.println("Do you wish to update the current locker?");
-				System.out.println("01 - Yes");
-				System.out.println("02 - No");
-				System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
-				s.next();
-			}
+		fileName = folderPath+fileName;
+				
+		if(!fileName.toLowerCase().contains(ext.toLowerCase())) {
+			fileName = fileName+ext;
 		}
 		
+		file = new File(fileName);
+		
+		System.out.println("Please type your new locker number:");
+		newLocker = s.nextLine();
+		
+		if(file.exists()) {
+			oldLocker = getFileLocker(fileName);
+			updateFile(fileName, oldLocker, newLocker);
+		}
+		else {
+			System.out.println("\n\nYour name does not exist in our catalog!!!!!");
+			System.out.println("Please go to option 1 on the Files Menu to register\n\n");	
+		}
+		
+		LockedMeApplication.printFileMenu();	
+		s.close();
 	}
 
-	public void printOrderedFiles() {
+	public static void printOrderedFiles() throws IOException {
         File folder = new File("Clients");
+        File[] fileList;
         
         if(folder.isDirectory())
         {
-            File[] fileList = folder.listFiles();
+            fileList = folder.listFiles();
 
             System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''");           
             System.out.println("Please find below all Client Name Files in Alphabetic order");
             System.out.println("Total number of Client Files: " + fileList.length);
-            System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''\n");
+            System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
                     
             Arrays.sort(fileList);
             
@@ -365,6 +348,9 @@ public class FileHandler {
             {
                 System.out.println(file.getName());
             }
+            System.out.println("\n");
         }
+        
+        LockedMeApplication.printWelcomeScreen();
     }
 }
