@@ -58,8 +58,8 @@ public class FileHandler {
 			System.out.println("\n''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 			System.out.println("Error: File already Exists.");
 			System.out.println("Do you wish to update the current locker? Select:");
-			System.out.println("01 - Yes");
-			System.out.println("02 - No");
+			System.out.println("1 - Yes");
+			System.out.println("2 - No");
 			System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 			
 			while(s.hasNext()) {
@@ -80,8 +80,8 @@ public class FileHandler {
 							System.out.println("\n\nOption Invalid!!!!!\n");
 							System.out.println("Please type the numer of desired option to continue...");	
 							System.out.println("Do you wish to update the current locker?");
-							System.out.println("01 - Yes");
-							System.out.println("02 - No");
+							System.out.println("1 - Yes");
+							System.out.println("2 - No");
 							System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 							break;
 						}
@@ -91,8 +91,8 @@ public class FileHandler {
 					System.out.println("\n\nOption Invalid!!!!!\n");
 					System.out.println("Please type the numer of desired option to continue...");	
 					System.out.println("Do you wish to update the current locker?");
-					System.out.println("01 - Yes");
-					System.out.println("02 - No");
+					System.out.println("1 - Yes");
+					System.out.println("2 - No");
 					System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 					s.next();
 				}
